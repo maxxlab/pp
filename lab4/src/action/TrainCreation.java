@@ -1,7 +1,6 @@
 package action;
 
 import train.Train;
-import userMenu.Menu;
 
 public class TrainCreation {
     Train train;
