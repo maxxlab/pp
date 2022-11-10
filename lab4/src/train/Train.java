@@ -1,12 +1,12 @@
 package train;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Train {
     private String trainName;
-    private int amountOfPassengers;
-    private int amountOfBaggage;
-    private int numberOfCars;
+    private int limitOfBaggage;
     private List<TrainCar> cars;
 
     public List<TrainCar> getCars() {
@@ -17,43 +17,63 @@ public class Train {
         this.cars = cars;
     }
 
-    public int getNumberOfCars() {
-        return numberOfCars;
-    }
 
-    public void setNumberOfCars(int numberOfCars) {
-        this.numberOfCars = numberOfCars;
-    }
 
     public void setTrainName(String trainName) {
         this.trainName = trainName;
     }
 
-    public void setAmountOfPassengers(int amountOfPassengers) {
-        this.amountOfPassengers = amountOfPassengers;
-    }
-
-    public void setAmountOfBaggage(int amountOfBaggage) {
-        this.amountOfBaggage = amountOfBaggage;
+    public void setLimitOfBaggage(int limitOfBaggage) {
+        this.limitOfBaggage = limitOfBaggage;
     }
 
     public String getTrainName() {
         return trainName;
     }
 
-    public int getAmountOfPassengers() {
-        return amountOfPassengers;
+    public int getLimitOfBaggage() {
+        return limitOfBaggage;
     }
 
-    public int getAmountOfBaggage() {
-        return amountOfBaggage;
-    }
-
-    public Train(String trainName, int amountOfPassengers, int amountOfBaggage, int numberOfCars, List<TrainCar> cars) {
+    public Train(String trainName, int amountOfBaggage, List<TrainCar> cars) {
         this.trainName = trainName;
-        this.amountOfPassengers = amountOfPassengers;
-        this.amountOfBaggage = amountOfBaggage;
-        this.numberOfCars = numberOfCars;
+        this.limitOfBaggage = amountOfBaggage;
         this.cars = cars;
+    }
+
+    public int getAmountOfPassengers(){
+        int amount = 0;
+        for (TrainCar car : cars){
+            amount += car.getNumberOfPlaces();
+        }
+        return amount;
+    }
+
+    public void sortCarsByLevelOfComfort(){
+        this.getCars().sort(Comparator.comparingInt(TrainCar::getNumberOfPlaces));
+        System.out.println(this.getCars());
+    }
+
+    public void findCarByRange(){
+        int min, max;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the minimal number of passengers: ");
+        min = scanner.nextInt();
+        System.out.println("Enter the maximal number of passengers: ");
+        max = scanner.nextInt();
+        for (TrainCar car : cars) {
+            if(car.getNumberOfPlaces() >= min && car.getNumberOfPlaces()<=max) {
+                System.out.println(car);
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Train\n" +
+                "Name: " + trainName +
+                "\nlimit of baggage: " + limitOfBaggage +
+                "\ncars: " + cars +
+                "\ntotal number of places: " + getAmountOfPassengers();
     }
 }

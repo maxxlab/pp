@@ -1,8 +1,18 @@
 package command;
 
+import data.TrainData;
+
+import java.io.IOException;
+
 public class SeeCommand implements Command{
+    TrainData trainData;
+
+    public SeeCommand(TrainData trainData) {
+        this.trainData = trainData;
+    }
+
     @Override
-    public void execute() {
-        System.out.println("See trains..");
+    public void execute() throws IOException {
+        trainData.showAllTrains();
     }
 }
